@@ -1,8 +1,10 @@
-// this is where i am going to pull the quiz questions from to display on web. 
-const question = document.querySelector('#question');
+// this is where i am going to pull the quiz questions from to display on web.
+
+const question =document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
 const progressText = document.querySelector('#progressText');
 const scoreText = document.querySelector('#score');
+const progressBarFull = document.querySelector('#progressBarFull');
 
 let currentQuestion = {}
 let acceptingAnswers = true
@@ -10,7 +12,7 @@ let score = 0
 let questionCounter = 0
 let availableQuestions = []
 
-let question = [
+let questions = [
     { //question one 
         question: "what is bla bla bla",
         choice1: '2',
@@ -44,12 +46,13 @@ let question = [
         asnwer: 5,
     },
 ]
+//capitals means we dont plan on changing it
 
 const SCORE_POINTS = 100
 const MAX_QUESTIONS = 4
 
 startGame = () => {
-    // questionCounter = 0
+    questionCounter = 0
     score = 0
     availableQuestions = [...questions]
     getNewQuestion()
@@ -64,9 +67,11 @@ getNewQuestion = () => {
 
     questionCounter++
     progressText.innerText = 'Question ${questionCounter} of ${MAX_QUESTIONS}'
+    progressBarFull.style.width = '${(questionCounter/MAX_QUESTIONS) * 100}%'
 
-    const quesntionIndex = Math.floor(Math.random() * availableQuestions.length)
-    currentQuestion = availableQuestions[quesntionIndez]
+
+    const questionIndex = Math.floor(Math.random() * availableQuestions.length)
+    currentQuestion = availableQuestions[questionIndex]
     question.innerText = currentQuestion.question
 
     choices.forEach(choice => {
@@ -74,24 +79,27 @@ getNewQuestion = () => {
         choice.innerText = currentQuestion['choice' + number]
     })
 
-    availableQuestions.splice(quesntionIndex, 1)
+    availableQuestions.splice(questionIndex, 1)
 
     acceptingAnswers = true
 }
+   
 
 choices.forEach(choice => {
-    choice.addEventListener('click' e => {
-        if (!acceptingAnswers) return
+    choice.addEventListener('click', e => {
+        if(!acceptingAnswers) return
+
         acceptingAnswers = false
         const selectedChoice = e.target
         const selectedAnswer = selectedChoice.dataset['number']
 
-        let classToApply === selectedAnswer == currentQuestion.asnwer ? 'correct' :
+        let classToApply = selectedAnswer == currentQuestion.asnwer ? 'correct' :
             'incorrect'
 
-        if (classToApply === 'correct') {
+        if(classToApply === 'correct') {
             incrementScore(SCORE_POINTS)
         }
+
         selectedChoice.parentElement.classList.add(classToApply)
 
         setTimeout(() => {

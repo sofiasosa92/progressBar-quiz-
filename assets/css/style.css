@@ -74,12 +74,14 @@ h2 {
     transform: scale(1.03);
 }
 
-.btn [:disabled]:hover {
+.btn [disabled]:hover {
     cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
 
 #highscore-btn {
-    background: linear-gradient(90deg, rgb(99, 88, 67) 100%, rgb(217, 191, 143) 100%);
+    background: linear-gradient(90deg, rgb(99, 88, 67) 100%, rgb(217, 191, 143) 0%);
 }
 
 #highscore-btn:hover {
@@ -94,6 +96,3 @@ h2 {
     font-size: 20px;
     line-height: 20px;
 } */
-
-
- */
